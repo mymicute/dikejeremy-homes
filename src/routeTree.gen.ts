@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
@@ -40,6 +41,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/sitemap.xml'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/list-property'
     | '/map'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/sitemap.xml'
@@ -217,6 +228,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/reset-password'
     | '/services'
     | '/settings'
     | '/sitemap.xml'
@@ -237,6 +249,7 @@ export interface RootRouteChildren {
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages': {
@@ -404,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
+  ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
