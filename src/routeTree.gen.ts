@@ -10,10 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as CarsRouteImport } from './routes/cars'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AgentsRouteImport } from './routes/agents'
@@ -27,6 +29,11 @@ import { Route as AgentsIdRouteImport } from './routes/agents.$id'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -47,6 +54,11 @@ const ListPropertyRoute = ListPropertyRouteImport.update({
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarsRoute = CarsRouteImport.update({
+  id: '/cars',
+  path: '/cars',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrowseRoute = BrowseRouteImport.update({
@@ -100,10 +112,12 @@ export interface FileRoutesByFullPath {
   '/agents': typeof AgentsRouteWithChildren
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/cars': typeof CarsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -115,9 +129,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/cars': typeof CarsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -131,10 +147,12 @@ export interface FileRoutesById {
   '/agents': typeof AgentsRouteWithChildren
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/cars': typeof CarsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -149,10 +167,12 @@ export interface FileRouteTypes {
     | '/agents'
     | '/auth'
     | '/browse'
+    | '/cars'
     | '/favorites'
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/services'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -164,9 +184,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/browse'
+    | '/cars'
     | '/favorites'
     | '/list-property'
     | '/map'
+    | '/services'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -179,10 +201,12 @@ export interface FileRouteTypes {
     | '/agents'
     | '/auth'
     | '/browse'
+    | '/cars'
     | '/favorites'
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/services'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -196,10 +220,12 @@ export interface RootRouteChildren {
   AgentsRoute: typeof AgentsRouteWithChildren
   AuthRoute: typeof AuthRoute
   BrowseRoute: typeof BrowseRoute
+  CarsRoute: typeof CarsRoute
   FavoritesRoute: typeof FavoritesRoute
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
+  ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PropertyIdRoute: typeof PropertyIdRoute
 }
@@ -211,6 +237,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages': {
@@ -239,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cars': {
+      id: '/cars'
+      path: '/cars'
+      fullPath: '/cars'
+      preLoaderRoute: typeof CarsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/browse': {
@@ -339,10 +379,12 @@ const rootRouteChildren: RootRouteChildren = {
   AgentsRoute: AgentsRouteWithChildren,
   AuthRoute: AuthRoute,
   BrowseRoute: BrowseRoute,
+  CarsRoute: CarsRoute,
   FavoritesRoute: FavoritesRoute,
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
+  ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PropertyIdRoute: PropertyIdRoute,
 }
