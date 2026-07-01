@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
@@ -29,6 +30,11 @@ import { Route as AgentsIdRouteImport } from './routes/agents.$id'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/services': typeof ServicesRoute
+  '/settings': typeof SettingsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
@@ -173,6 +182,7 @@ export interface FileRouteTypes {
     | '/map'
     | '/messages'
     | '/services'
+    | '/settings'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/services'
+    | '/settings'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/map'
     | '/messages'
     | '/services'
+    | '/settings'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ServicesRoute: typeof ServicesRoute
+  SettingsRoute: typeof SettingsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PropertyIdRoute: typeof PropertyIdRoute
 }
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -385,6 +405,7 @@ const rootRouteChildren: RootRouteChildren = {
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ServicesRoute: ServicesRoute,
+  SettingsRoute: SettingsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PropertyIdRoute: PropertyIdRoute,
 }
