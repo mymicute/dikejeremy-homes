@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
@@ -23,6 +24,11 @@ import { Route as PropertyIdRouteImport } from './routes/property.$id'
 import { Route as MessagesIdRouteImport } from './routes/messages.$id'
 import { Route as AgentsIdRouteImport } from './routes/agents.$id'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MessagesRoute = MessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/list-property'
     | '/map'
+    | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/sitemap.xml'
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
@@ -188,11 +200,19 @@ export interface RootRouteChildren {
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PropertyIdRoute: typeof PropertyIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/messages': {
       id: '/messages'
       path: '/messages'
@@ -323,6 +343,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   PropertyIdRoute: PropertyIdRoute,
 }
 export const routeTree = rootRouteImport
