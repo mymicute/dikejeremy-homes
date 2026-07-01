@@ -219,6 +219,26 @@ function Home() {
           ))}
         </div>
 
+        {/* Marketplace expansion */}
+        <section className="mt-8 grid gap-4 md:grid-cols-2">
+          <Link to="/cars" className="group flex items-center justify-between rounded-3xl bg-navy-950 p-6 text-white ring-1 ring-black/5 md:p-8">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-navy-50/60">Also on DikeJeremy</p>
+              <h3 className="mt-1 font-display text-2xl font-semibold">Cars — buy & rent</h3>
+              <p className="mt-1 text-sm text-navy-50/80">Verified Nigerian, foreign used and brand new listings.</p>
+            </div>
+            <ArrowRight className="size-5 transition group-hover:translate-x-1" />
+          </Link>
+          <Link to="/services" className="group flex items-center justify-between rounded-3xl bg-white p-6 ring-1 ring-black/5 md:p-8">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-navy-700">Home services</p>
+              <h3 className="mt-1 font-display text-2xl font-semibold text-navy-950">Painting, cleaning, plumbing…</h3>
+              <p className="mt-1 text-sm text-navy-700">Book verified pros for home upgrades and repairs.</p>
+            </div>
+            <ArrowRight className="size-5 text-navy-950 transition group-hover:translate-x-1" />
+          </Link>
+        </section>
+
         {/* Verified vendor spotlight */}
         <section className="mt-12 rounded-3xl bg-white p-6 ring-1 ring-black/5 md:p-8">
           <div className="mb-6 flex items-center justify-between">
