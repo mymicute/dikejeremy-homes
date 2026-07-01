@@ -86,7 +86,7 @@ function Browse() {
               <span className="mb-1 block text-[10px] uppercase tracking-wider text-navy-700">Listing</span>
               <select
                 value={search.listingType ?? ""}
-                onChange={(e) => navigate({ search: (s) => ({ ...s, listingType: (e.target.value || undefined) as never }) })}
+                onChange={(e) => navigate({ search: (s: BrowseSearch) => ({ ...s, listingType: (e.target.value || undefined) as BrowseSearch["listingType"] }) })}
                 className="w-full rounded-lg bg-navy-50 px-3 py-2"
               >
                 <option value="">Any</option>
@@ -99,7 +99,7 @@ function Browse() {
               <span className="mb-1 block text-[10px] uppercase tracking-wider text-navy-700">Type</span>
               <select
                 value={search.type ?? ""}
-                onChange={(e) => navigate({ search: (s) => ({ ...s, type: e.target.value || undefined }) })}
+                onChange={(e) => navigate({ search: (s: BrowseSearch) => ({ ...s, type: e.target.value || undefined }) })}
                 className="w-full rounded-lg bg-navy-50 px-3 py-2"
               >
                 <option value="">Any</option>
@@ -112,7 +112,7 @@ function Browse() {
                 type="number"
                 min={0}
                 value={search.beds ?? ""}
-                onChange={(e) => navigate({ search: (s) => ({ ...s, beds: e.target.value ? Number(e.target.value) : undefined }) })}
+                onChange={(e) => navigate({ search: (s: BrowseSearch) => ({ ...s, beds: e.target.value ? Number(e.target.value) : undefined }) })}
                 className="w-full rounded-lg bg-navy-50 px-3 py-2"
               />
             </label>

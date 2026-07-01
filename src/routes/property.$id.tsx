@@ -67,7 +67,7 @@ function PropertyDetail() {
               className="h-64 w-full object-cover md:h-[520px]"
             />
           </div>
-          {property.images.slice(0, 4).map((src, i) => (
+          {property.images.slice(0, 4).map((src: string, i: number) => (
             <button
               key={i}
               onClick={() => setGallery(i)}
@@ -123,7 +123,7 @@ function PropertyDetail() {
             <section className="mt-8">
               <h2 className="font-display text-xl font-semibold text-navy-950">Amenities</h2>
               <div className="mt-3 flex flex-wrap gap-2">
-                {property.amenities.map((a) => (
+                {property.amenities.map((a: string) => (
                   <span key={a} className="rounded-lg bg-white px-3 py-1.5 text-xs font-medium text-navy-950 ring-1 ring-black/5">
                     {a}
                   </span>
