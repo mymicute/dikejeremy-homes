@@ -30,13 +30,25 @@ function Home() {
       .limit(24)
       .then(({ data }) => setProperties(data ?? []));
 
-    supabase
-      .from("status_posts")
-      .select("*, profiles(full_name, avatar_url)")
-      .gt("expires_at", new Date().toISOString())
-      .order("created_at", { ascending: false })
-      .limit(24)
-      .then(({ data }) => setStatuses((data as StatusWithProfile[]) ?? []));
+    (async () => {
+      const { data: sData } = await supabase
+        .from("status_posts")
+        .select("*")
+        .gt("expires_at", new Date().toISOString())
+        .order("created_at", { ascending: false })
+        .limit(24);
+      const rows = sData ?? [];
+      const ids = Array.from(new Set(rows.map((r) => r.user_id)));
+      const profilesMap = new Map<string, { full_name: string | null; avatar_url: string | null }>();
+      if (ids.length > 0) {
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("id, full_name, avatar_url")
+          .in("id", ids);
+        (profs ?? []).forEach((p) => profilesMap.set(p.id, { full_name: p.full_name, avatar_url: p.avatar_url }));
+      }
+      setStatuses(rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null })));
+    })();
   }, []);
 
   return (

@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
@@ -24,6 +25,7 @@ import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages.index'
 import { Route as AgentsIndexRouteImport } from './routes/agents.index'
+import { Route as StatusNewRouteImport } from './routes/status.new'
 import { Route as PropertyIdRouteImport } from './routes/property.$id'
 import { Route as MessagesIdRouteImport } from './routes/messages.$id'
 import { Route as AgentsIdRouteImport } from './routes/agents.$id'
@@ -46,6 +48,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesRoute = MessagesRouteImport.update({
@@ -103,6 +110,11 @@ const AgentsIndexRoute = AgentsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AgentsRoute,
 } as any)
+const StatusNewRoute = StatusNewRouteImport.update({
+  id: '/status/new',
+  path: '/status/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PropertyIdRoute = PropertyIdRouteImport.update({
   id: '/property/$id',
   path: '/property/$id',
@@ -129,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -136,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
+  '/status/new': typeof StatusNewRoute
   '/agents/': typeof AgentsIndexRoute
   '/messages/': typeof MessagesIndexRoute
 }
@@ -147,6 +161,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
+  '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -154,6 +169,7 @@ export interface FileRoutesByTo {
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
+  '/status/new': typeof StatusNewRoute
   '/agents': typeof AgentsIndexRoute
   '/messages': typeof MessagesIndexRoute
 }
@@ -168,6 +184,7 @@ export interface FileRoutesById {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
@@ -175,6 +192,7 @@ export interface FileRoutesById {
   '/agents/$id': typeof AgentsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/property/$id': typeof PropertyIdRoute
+  '/status/new': typeof StatusNewRoute
   '/agents/': typeof AgentsIndexRoute
   '/messages/': typeof MessagesIndexRoute
 }
@@ -190,6 +208,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/profile'
     | '/reset-password'
     | '/services'
     | '/settings'
@@ -197,6 +216,7 @@ export interface FileRouteTypes {
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
+    | '/status/new'
     | '/agents/'
     | '/messages/'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +228,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/list-property'
     | '/map'
+    | '/profile'
     | '/reset-password'
     | '/services'
     | '/settings'
@@ -215,6 +236,7 @@ export interface FileRouteTypes {
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
+    | '/status/new'
     | '/agents'
     | '/messages'
   id:
@@ -228,6 +250,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/messages'
+    | '/profile'
     | '/reset-password'
     | '/services'
     | '/settings'
@@ -235,6 +258,7 @@ export interface FileRouteTypes {
     | '/agents/$id'
     | '/messages/$id'
     | '/property/$id'
+    | '/status/new'
     | '/agents/'
     | '/messages/'
   fileRoutesById: FileRoutesById
@@ -249,11 +273,13 @@ export interface RootRouteChildren {
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   PropertyIdRoute: typeof PropertyIdRoute
+  StatusNewRoute: typeof StatusNewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -284,6 +310,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages': {
@@ -363,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentsIndexRouteImport
       parentRoute: typeof AgentsRoute
     }
+    '/status/new': {
+      id: '/status/new'
+      path: '/status/new'
+      fullPath: '/status/new'
+      preLoaderRoute: typeof StatusNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/property/$id': {
       id: '/property/$id'
       path: '/property/$id'
@@ -424,11 +464,13 @@ const rootRouteChildren: RootRouteChildren = {
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
+  ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   PropertyIdRoute: PropertyIdRoute,
+  StatusNewRoute: StatusNewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
