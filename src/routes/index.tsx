@@ -1,22 +1,56 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, MapPin, TrendingUp, ArrowRight, Plus, Building2, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Search, MapPin, TrendingUp, ArrowRight, Plus, Building2, Users, Sparkles } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { BottomNav } from "@/components/site/BottomNav";
-import { PropertyCard } from "@/components/site/PropertyCard";
-import { StatusRing } from "@/components/site/StatusRing";
-import {
-  properties,
-  agents,
-  categories,
-  trendingLocations,
-} from "@/lib/mock-data";
-import mapImage from "@/assets/map-lagos.jpg";
+import { categories, trendingLocations, formatNaira } from "@/lib/mock-data";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
   component: Home,
 });
 
+type Property = Tables<"properties">;
+type StatusPost = Tables<"status_posts">;
+type StatusWithProfile = StatusPost & {
+  profiles: Pick<Tables<"profiles">, "full_name" | "avatar_url"> | null;
+};
+
 function Home() {
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [statuses, setStatuses] = useState<StatusWithProfile[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("properties")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(24)
+      .then(({ data }) => setProperties(data ?? []));
+
+    (async () => {
+      const { data: sData } = await supabase
+        .from("status_posts")
+        .select("*")
+        .gt("expires_at", new Date().toISOString())
+        .order("created_at", { ascending: false })
+        .limit(24);
+      const rows = sData ?? [];
+      const ids = Array.from(new Set(rows.map((r) => r.user_id)));
+      const profilesMap = new Map<string, { full_name: string | null; avatar_url: string | null }>();
+      if (ids.length > 0) {
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("id, full_name, avatar_url")
+          .in("id", ids);
+        (profs ?? []).forEach((p) => profilesMap.set(p.id, { full_name: p.full_name, avatar_url: p.avatar_url }));
+      }
+      setStatuses(rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null })));
+    })();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background pb-32">
       <Header />
@@ -85,27 +119,51 @@ function Home() {
         </section>
 
         {/* Status rings */}
-        {agents.length > 0 && (
-          <section className="mb-10 -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                Vendor Updates
-              </h2>
-              <Link to="/agents" className="text-xs font-medium text-muted-foreground hover:text-foreground">
-                See all →
-              </Link>
-            </div>
-            <div className="flex gap-5 pb-2">
-              {agents.map((a) => (
-                <Link key={a.id} to="/agents/$id" params={{ id: a.id }}>
-                  <StatusRing agent={a} />
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+        <section className="mb-10 -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              Status Updates
+            </h2>
+            <Link to="/status/new" className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground">
+              <Sparkles className="size-3" /> Post yours
+            </Link>
+          </div>
+          <div className="flex gap-5 pb-2">
+            <Link to="/status/new" className="flex flex-col items-center gap-2">
+              <div className="grid size-16 place-items-center rounded-full bg-card ring-2 ring-dashed ring-border text-muted-foreground">
+                <Plus className="size-5" />
+              </div>
+              <span className="text-xs font-medium text-muted-foreground">Add</span>
+            </Link>
+            {statuses.map((s) => {
+              const name = s.profiles?.full_name?.split(" ")[0] ?? "User";
+              const initials = (s.profiles?.full_name ?? "U")
+                .split(" ")
+                .map((x) => x[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+              return (
+                <div key={s.id} className="flex flex-col items-center gap-2">
+                  <div className="flex size-16 items-center justify-center rounded-full bg-background p-1 ring-2 ring-primary">
+                    <div className="grid size-full overflow-hidden rounded-full bg-primary text-primary-foreground">
+                      {s.profiles?.avatar_url ? (
+                        <img src={s.profiles.avatar_url} alt={name} className="size-full object-cover" />
+                      ) : s.image_url ? (
+                        <img src={s.image_url} alt={name} className="size-full object-cover" />
+                      ) : (
+                        <span className="grid size-full place-items-center text-sm font-semibold">{initials}</span>
+                      )}
+                    </div>
+                  </div>
+                  <span className="max-w-[64px] truncate text-xs font-medium text-foreground">{name}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
-        {/* Empty state OR Bento grid */}
+        {/* Feed */}
         {properties.length === 0 ? (
           <section className="rounded-3xl bg-card p-10 text-center ring-1 ring-border md:p-16">
             <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-muted">
@@ -113,7 +171,7 @@ function Home() {
             </div>
             <h2 className="mt-5 font-display text-2xl font-semibold text-foreground">No listings yet</h2>
             <p className="mx-auto mt-2 max-w-[46ch] text-sm text-muted-foreground">
-              Your marketplace is empty. Add your first property, car or service to get started.
+              Your feed is empty. Post the first property to get it started.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
               <Link
@@ -133,7 +191,34 @@ function Home() {
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-6">
             {properties.map((p) => (
-              <PropertyCard key={p.id} property={p} size="sm" />
+              <Link
+                key={p.id}
+                to="/"
+                className="group block overflow-hidden rounded-3xl bg-card p-3 ring-1 ring-border transition hover:ring-primary/40 md:p-4"
+              >
+                <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-2xl bg-muted">
+                  {p.image_url ? (
+                    <img
+                      src={p.image_url}
+                      alt={p.title}
+                      loading="lazy"
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="grid size-full place-items-center text-muted-foreground">
+                      <Building2 className="size-8" />
+                    </div>
+                  )}
+                </div>
+                <div className="mb-1 flex items-center justify-between text-xs font-medium text-muted-foreground">
+                  <span>{p.city ?? p.location ?? "—"}</span>
+                  <span className="uppercase tracking-wider text-[10px]">{p.listing_type}</span>
+                </div>
+                <h3 className="font-display text-lg font-semibold text-foreground">
+                  {formatNaira(Number(p.price), p.listing_type)}
+                </h3>
+                <p className="mt-0.5 line-clamp-1 text-sm text-muted-foreground">{p.title}</p>
+              </Link>
             ))}
           </div>
         )}

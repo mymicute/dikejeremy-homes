@@ -22,6 +22,7 @@ export type Database = {
           full_name: string | null
           id: string
           phone: string | null
+          status_duration_hours: number
           updated_at: string
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           full_name?: string | null
           id: string
           phone?: string | null
+          status_duration_hours?: number
           updated_at?: string
         }
         Update: {
@@ -40,7 +42,92 @@ export type Database = {
           full_name?: string | null
           id?: string
           phone?: string | null
+          status_duration_hours?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          baths: number | null
+          beds: number | null
+          city: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          listing_type: string
+          location: string | null
+          owner_id: string
+          price: number
+          property_type: string
+          size_sqm: number | null
+          state: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          baths?: number | null
+          beds?: number | null
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          listing_type?: string
+          location?: string | null
+          owner_id: string
+          price?: number
+          property_type?: string
+          size_sqm?: number | null
+          state?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          baths?: number | null
+          beds?: number | null
+          city?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          listing_type?: string
+          location?: string | null
+          owner_id?: string
+          price?: number
+          property_type?: string
+          size_sqm?: number | null
+          state?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      status_posts: {
+        Row: {
+          caption: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          image_url: string
+          user_id: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          image_url: string
+          user_id: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          image_url?: string
+          user_id?: string
         }
         Relationships: []
       }
