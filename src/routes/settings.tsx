@@ -11,8 +11,8 @@ import { useAuth } from "@/hooks/useAuth";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — DikeJeremy" },
-      { name: "description", content: "Manage your DikeJeremy preferences, appearance and status duration." },
+      { title: "Settings — Dejedy" },
+      { name: "description", content: "Manage your Dejedy preferences, appearance and status duration." },
     ],
   }),
   component: Settings,
@@ -75,7 +75,7 @@ function Settings() {
       <Header />
       <main className="mx-auto max-w-3xl px-4 py-6 md:px-6 md:py-10">
         <h1 className="font-display text-3xl font-semibold text-foreground md:text-4xl">Settings</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Personalize your DikeJeremy experience.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Personalize your Dejedy experience.</p>
 
         <section className="mt-8 space-y-3">
           <Group title="Appearance">

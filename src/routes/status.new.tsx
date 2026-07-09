@@ -12,8 +12,8 @@ export const Route = createFileRoute("/status/new")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "New status — DikeJeremy" },
-      { name: "description", content: "Share a time-limited status update to the DikeJeremy feed." },
+      { title: "New status — Dejedy" },
+      { name: "description", content: "Share a time-limited status update to the Dejedy feed." },
     ],
   }),
   component: NewStatus,

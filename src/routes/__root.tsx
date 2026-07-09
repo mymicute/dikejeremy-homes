@@ -27,7 +27,7 @@ function NotFoundComponent() {
             to="/"
             className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
           >
-            Back to DikeJeremy
+            Back to Dejedy
           </Link>
         </div>
       </div>
@@ -75,10 +75,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DikeJeremy — Nigeria's Premium Real Estate Marketplace" },
-      { name: "description", content: "Buy, rent and short-let verified homes across Lagos, Abuja and Port Harcourt. Chat with agents, book inspections and discover Nigeria's finest properties on DikeJeremy." },
-      { name: "author", content: "DikeJeremy" },
-      { property: "og:title", content: "DikeJeremy — Nigeria's Premium Real Estate Marketplace" },
+      { title: "Dejedy — Nigeria's Premium Real Estate Marketplace" },
+      { name: "description", content: "Buy, rent and short-let verified homes across Lagos, Abuja and Port Harcourt. Chat with agents, book inspections and discover Nigeria's finest properties on Dejedy." },
+      { name: "author", content: "Dejedy" },
+      { property: "og:title", content: "Dejedy — Nigeria's Premium Real Estate Marketplace" },
       { property: "og:description", content: "Verified properties, trusted agents. Find your next home across Nigeria." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

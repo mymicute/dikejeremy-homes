@@ -14,9 +14,9 @@ export const Route = createFileRoute("/cars")({
   }),
   head: () => ({
     meta: [
-      { title: "Cars for sale & hire in Nigeria — DikeJeremy" },
+      { title: "Cars for sale & hire in Nigeria — Dejedy" },
       { name: "description", content: "Buy and rent verified cars in Lagos, Abuja and Port Harcourt. Brand new, foreign used and Nigerian used." },
-      { property: "og:title", content: "Cars — DikeJeremy" },
+      { property: "og:title", content: "Cars — Dejedy" },
       { property: "og:description", content: "Buy and rent verified cars across Nigeria." },
     ],
   }),

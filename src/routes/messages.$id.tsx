@@ -12,7 +12,7 @@ export const Route = createFileRoute("/messages/$id")({
     return { agent };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: `Chat with ${loaderData?.agent.name ?? "agent"} — DikeJeremy` }],
+    meta: [{ title: `Chat with ${loaderData?.agent.name ?? "agent"} — Dejedy` }],
   }),
   notFoundComponent: () => <div className="p-8">Agent not found.</div>,
   component: Chat,

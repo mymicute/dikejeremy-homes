@@ -7,7 +7,7 @@ import { MessageCircle } from "lucide-react";
 export const Route = createFileRoute("/messages/")({
   head: () => ({
     meta: [
-      { title: "Messages — DikeJeremy" },
+      { title: "Messages — Dejedy" },
       { name: "description", content: "Chat with verified agents about properties you love." },
     ],
   }),

@@ -8,7 +8,7 @@ import mapImage from "@/assets/map-lagos.jpg";
 export const Route = createFileRoute("/map")({
   head: () => ({
     meta: [
-      { title: "Property map — DikeJeremy" },
+      { title: "Property map — Dejedy" },
       { name: "description", content: "Discover properties on the map across Lagos, Abuja and Port Harcourt." },
     ],
   }),
