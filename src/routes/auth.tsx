@@ -10,8 +10,8 @@ import { z } from "zod";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — DikeJeremy" },
-      { name: "description", content: "Sign in or create your DikeJeremy account." },
+      { title: "Sign in — Dejedy" },
+      { name: "description", content: "Sign in or create your Dejedy account." },
     ],
   }),
   component: Auth,
@@ -158,7 +158,7 @@ function Auth() {
       <main className="mx-auto grid max-w-md gap-6 px-4 py-10 md:py-16">
         <div>
           <h1 className="font-display text-3xl font-semibold text-navy-950">
-            {mode === "signin" ? "Welcome back" : "Join DikeJeremy"}
+            {mode === "signin" ? "Welcome back" : "Join Dejedy"}
           </h1>
           <p className="mt-2 text-sm text-navy-700">
             {mode === "signin" ? "Sign in to save homes and message agents." : "Create an account to save homes and book inspections."}
@@ -227,7 +227,7 @@ function Auth() {
         </div>
 
         <p className="text-center text-sm text-navy-700">
-          {mode === "signin" ? "New to DikeJeremy?" : "Have an account?"}{" "}
+          {mode === "signin" ? "New to Dejedy?" : "Have an account?"}{" "}
           <button
             onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
             className="font-medium text-navy-950 underline"

@@ -284,7 +284,7 @@ function Home() {
 
       <footer className="mx-auto max-w-7xl px-6 pb-16 pt-8 text-center">
         <p className="mx-auto max-w-[56ch] text-pretty text-sm text-muted-foreground">
-          DikeJeremy — Nigeria's marketplace for real estate, cars and home services.
+          Dejedy — Nigeria's marketplace for real estate, cars and home services.
         </p>
       </footer>
 

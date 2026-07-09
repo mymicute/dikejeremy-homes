@@ -9,8 +9,8 @@ import { z } from "zod";
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
     meta: [
-      { title: "Reset password — DikeJeremy" },
-      { name: "description", content: "Set a new password for your DikeJeremy account." },
+      { title: "Reset password — Dejedy" },
+      { name: "description", content: "Set a new password for your Dejedy account." },
     ],
   }),
   component: ResetPassword,

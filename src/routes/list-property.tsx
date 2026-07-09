@@ -12,7 +12,7 @@ export const Route = createFileRoute("/list-property")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "List your property — DikeJeremy" },
+      { title: "List your property — Dejedy" },
       { name: "description", content: "Post your property to reach verified buyers and renters across Nigeria." },
     ],
   }),

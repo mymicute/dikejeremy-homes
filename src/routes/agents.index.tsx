@@ -7,9 +7,9 @@ import { agents } from "@/lib/mock-data";
 export const Route = createFileRoute("/agents/")({
   head: () => ({
     meta: [
-      { title: "Verified Agents — DikeJeremy" },
+      { title: "Verified Agents — Dejedy" },
       { name: "description", content: "Browse verified estate agents, landlords and developers across Nigeria." },
-      { property: "og:title", content: "Verified Agents — DikeJeremy" },
+      { property: "og:title", content: "Verified Agents — Dejedy" },
       { property: "og:description", content: "Trusted vendors across Lagos, Abuja and Port Harcourt." },
     ],
   }),

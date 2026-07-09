@@ -28,9 +28,9 @@ export const Route = createFileRoute("/browse")({
   }),
   head: () => ({
     meta: [
-      { title: "Browse properties — DikeJeremy" },
+      { title: "Browse properties — Dejedy" },
       { name: "description", content: "Search verified properties for buy, rent and short-let across Nigeria." },
-      { property: "og:title", content: "Browse properties — DikeJeremy" },
+      { property: "og:title", content: "Browse properties — Dejedy" },
       { property: "og:description", content: "Filter by location, price, bedrooms and more." },
     ],
   }),

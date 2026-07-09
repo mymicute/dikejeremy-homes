@@ -14,8 +14,8 @@ export const Route = createFileRoute("/profile")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Your profile — DikeJeremy" },
-      { name: "description", content: "Manage your DikeJeremy profile, listings and status updates." },
+      { title: "Your profile — Dejedy" },
+      { name: "description", content: "Manage your Dejedy profile, listings and status updates." },
     ],
   }),
   component: ProfilePage,

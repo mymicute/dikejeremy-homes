@@ -15,9 +15,9 @@ export const Route = createFileRoute("/services")({
   }),
   head: () => ({
     meta: [
-      { title: "Home services in Nigeria — DikeJeremy" },
+      { title: "Home services in Nigeria — Dejedy" },
       { name: "description", content: "Book verified painting, cleaning, plumbing, electrical, carpentry and fumigation across Nigeria." },
-      { property: "og:title", content: "Home services — DikeJeremy" },
+      { property: "og:title", content: "Home services — Dejedy" },
       { property: "og:description", content: "Verified handymen and home service pros across Nigeria." },
     ],
   }),

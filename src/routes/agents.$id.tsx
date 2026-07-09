@@ -13,12 +13,12 @@ export const Route = createFileRoute("/agents/$id")({
   },
   head: ({ loaderData }) => {
     const a = loaderData?.agent;
-    if (!a) return { meta: [{ title: "Agent — DikeJeremy" }] };
+    if (!a) return { meta: [{ title: "Agent — Dejedy" }] };
     return {
       meta: [
-        { title: `${a.name} — ${a.role} in ${a.city} · DikeJeremy` },
+        { title: `${a.name} — ${a.role} in ${a.city} · Dejedy` },
         { name: "description", content: a.bio },
-        { property: "og:title", content: `${a.name} — DikeJeremy` },
+        { property: "og:title", content: `${a.name} — Dejedy` },
         { property: "og:description", content: a.bio },
       ],
     };

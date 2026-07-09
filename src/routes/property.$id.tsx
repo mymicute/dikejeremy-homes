@@ -16,8 +16,8 @@ export const Route = createFileRoute("/property/$id")({
   },
   head: ({ loaderData }) => {
     const p = loaderData?.property;
-    if (!p) return { meta: [{ title: "Property — DikeJeremy" }] };
-    const title = `${p.title} in ${p.area}, ${p.city} — DikeJeremy`;
+    if (!p) return { meta: [{ title: "Property — Dejedy" }] };
+    const title = `${p.title} in ${p.area}, ${p.city} — Dejedy`;
     const desc = `${p.beds} bed · ${p.baths} bath · ${p.sizeSqm}m². ${formatNaira(p.price, p.listingType)} in ${p.area}.`;
     return {
       meta: [
@@ -207,7 +207,7 @@ function PropertyDetail() {
             <div className="rounded-3xl bg-navy-950 p-6 text-white">
               <p className="text-[10px] font-semibold uppercase tracking-wider opacity-60">Verified Listing</p>
               <p className="mt-2 text-sm">
-                This property was inspected and verified by the DikeJeremy on-ground team.
+                This property was inspected and verified by the Dejedy on-ground team.
               </p>
             </div>
           </aside>
