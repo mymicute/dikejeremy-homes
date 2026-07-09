@@ -193,7 +193,8 @@ function Home() {
             {properties.map((p) => (
               <Link
                 key={p.id}
-                to="/"
+                to="/property/$id"
+                params={{ id: p.id }}
                 className="group block overflow-hidden rounded-3xl bg-card p-3 ring-1 ring-border transition hover:ring-primary/40 md:p-4"
               >
                 <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-2xl bg-muted">
