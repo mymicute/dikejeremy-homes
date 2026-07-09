@@ -56,8 +56,10 @@ export type Database = {
           description: string | null
           id: string
           image_url: string | null
+          latitude: number | null
           listing_type: string
           location: string | null
+          longitude: number | null
           owner_id: string
           price: number
           property_type: string
@@ -74,8 +76,10 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          latitude?: number | null
           listing_type?: string
           location?: string | null
+          longitude?: number | null
           owner_id: string
           price?: number
           property_type?: string
@@ -92,8 +96,10 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          latitude?: number | null
           listing_type?: string
           location?: string | null
+          longitude?: number | null
           owner_id?: string
           price?: number
           property_type?: string
