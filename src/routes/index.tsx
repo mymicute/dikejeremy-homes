@@ -304,6 +304,44 @@ function Home() {
       </footer>
 
       <BottomNav />
+
+      {viewing && (
+        <div
+          onClick={() => setViewing(null)}
+          className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md overflow-hidden rounded-3xl bg-card ring-1 ring-border"
+          >
+            <div className="flex items-center gap-3 p-4">
+              <div className="grid size-10 place-items-center overflow-hidden rounded-full bg-primary text-primary-foreground">
+                {viewing.profiles?.avatar_url ? (
+                  <img src={viewing.profiles.avatar_url} alt="" className="size-full object-cover" />
+                ) : (
+                  <span className="text-xs font-semibold">
+                    {(viewing.profiles?.full_name ?? "U").slice(0, 1).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">{viewing.profiles?.full_name ?? "User"}</p>
+                <p className="text-[11px] text-muted-foreground">
+                  {new Date(viewing.created_at).toLocaleString()}
+                </p>
+              </div>
+              <button
+                onClick={() => setViewing(null)}
+                className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground"
+              >
+                Close
+              </button>
+            </div>
+            <img src={viewing.image_url} alt="Status" className="max-h-[70vh] w-full object-contain bg-black" />
+            {viewing.caption && <p className="p-4 text-sm text-foreground">{viewing.caption}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
