@@ -21,6 +21,7 @@ type StatusWithProfile = StatusPost & {
 function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [statuses, setStatuses] = useState<StatusWithProfile[]>([]);
+  const [viewing, setViewing] = useState<StatusWithProfile | null>(null);
 
   useEffect(() => {
     supabase
@@ -31,6 +32,8 @@ function Home() {
       .then(({ data }) => setProperties(data ?? []));
 
     (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const currentId = userData.user?.id;
       const { data: sData } = await supabase
         .from("status_posts")
         .select("*")
@@ -47,7 +50,13 @@ function Home() {
           .in("id", ids);
         (profs ?? []).forEach((p) => profilesMap.set(p.id, { full_name: p.full_name, avatar_url: p.avatar_url }));
       }
-      setStatuses(rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null })));
+      const withProfiles = rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null }));
+      withProfiles.sort((a, b) => {
+        const aMine = a.user_id === currentId ? 0 : 1;
+        const bMine = b.user_id === currentId ? 0 : 1;
+        return aMine - bMine;
+      });
+      setStatuses(withProfiles);
     })();
   }, []);
 
@@ -144,20 +153,25 @@ function Home() {
                 .slice(0, 2)
                 .toUpperCase();
               return (
-                <div key={s.id} className="flex flex-col items-center gap-2">
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setViewing(s)}
+                  className="flex flex-col items-center gap-2"
+                >
                   <div className="flex size-16 items-center justify-center rounded-full bg-background p-1 ring-2 ring-primary">
                     <div className="grid size-full overflow-hidden rounded-full bg-primary text-primary-foreground">
-                      {s.profiles?.avatar_url ? (
-                        <img src={s.profiles.avatar_url} alt={name} className="size-full object-cover" />
-                      ) : s.image_url ? (
+                      {s.image_url ? (
                         <img src={s.image_url} alt={name} className="size-full object-cover" />
+                      ) : s.profiles?.avatar_url ? (
+                        <img src={s.profiles.avatar_url} alt={name} className="size-full object-cover" />
                       ) : (
                         <span className="grid size-full place-items-center text-sm font-semibold">{initials}</span>
                       )}
                     </div>
                   </div>
                   <span className="max-w-[64px] truncate text-xs font-medium text-foreground">{name}</span>
-                </div>
+                </button>
               );
             })}
           </div>
@@ -290,6 +304,44 @@ function Home() {
       </footer>
 
       <BottomNav />
+
+      {viewing && (
+        <div
+          onClick={() => setViewing(null)}
+          className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md overflow-hidden rounded-3xl bg-card ring-1 ring-border"
+          >
+            <div className="flex items-center gap-3 p-4">
+              <div className="grid size-10 place-items-center overflow-hidden rounded-full bg-primary text-primary-foreground">
+                {viewing.profiles?.avatar_url ? (
+                  <img src={viewing.profiles.avatar_url} alt="" className="size-full object-cover" />
+                ) : (
+                  <span className="text-xs font-semibold">
+                    {(viewing.profiles?.full_name ?? "U").slice(0, 1).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">{viewing.profiles?.full_name ?? "User"}</p>
+                <p className="text-[11px] text-muted-foreground">
+                  {new Date(viewing.created_at).toLocaleString()}
+                </p>
+              </div>
+              <button
+                onClick={() => setViewing(null)}
+                className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground"
+              >
+                Close
+              </button>
+            </div>
+            <img src={viewing.image_url} alt="Status" className="max-h-[70vh] w-full object-contain bg-black" />
+            {viewing.caption && <p className="p-4 text-sm text-foreground">{viewing.caption}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
