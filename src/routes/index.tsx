@@ -21,6 +21,7 @@ type StatusWithProfile = StatusPost & {
 function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [statuses, setStatuses] = useState<StatusWithProfile[]>([]);
+  const [viewing, setViewing] = useState<StatusWithProfile | null>(null);
 
   useEffect(() => {
     supabase
@@ -31,6 +32,8 @@ function Home() {
       .then(({ data }) => setProperties(data ?? []));
 
     (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const currentId = userData.user?.id;
       const { data: sData } = await supabase
         .from("status_posts")
         .select("*")
@@ -47,7 +50,13 @@ function Home() {
           .in("id", ids);
         (profs ?? []).forEach((p) => profilesMap.set(p.id, { full_name: p.full_name, avatar_url: p.avatar_url }));
       }
-      setStatuses(rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null })));
+      const withProfiles = rows.map((r) => ({ ...r, profiles: profilesMap.get(r.user_id) ?? null }));
+      withProfiles.sort((a, b) => {
+        const aMine = a.user_id === currentId ? 0 : 1;
+        const bMine = b.user_id === currentId ? 0 : 1;
+        return aMine - bMine;
+      });
+      setStatuses(withProfiles);
     })();
   }, []);
 
