@@ -153,20 +153,25 @@ function Home() {
                 .slice(0, 2)
                 .toUpperCase();
               return (
-                <div key={s.id} className="flex flex-col items-center gap-2">
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setViewing(s)}
+                  className="flex flex-col items-center gap-2"
+                >
                   <div className="flex size-16 items-center justify-center rounded-full bg-background p-1 ring-2 ring-primary">
                     <div className="grid size-full overflow-hidden rounded-full bg-primary text-primary-foreground">
-                      {s.profiles?.avatar_url ? (
-                        <img src={s.profiles.avatar_url} alt={name} className="size-full object-cover" />
-                      ) : s.image_url ? (
+                      {s.image_url ? (
                         <img src={s.image_url} alt={name} className="size-full object-cover" />
+                      ) : s.profiles?.avatar_url ? (
+                        <img src={s.profiles.avatar_url} alt={name} className="size-full object-cover" />
                       ) : (
                         <span className="grid size-full place-items-center text-sm font-semibold">{initials}</span>
                       )}
                     </div>
                   </div>
                   <span className="max-w-[64px] truncate text-xs font-medium text-foreground">{name}</span>
-                </div>
+                </button>
               );
             })}
           </div>
