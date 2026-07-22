@@ -49,7 +49,8 @@ export const services: Service[] = [];
 
 
 export const carCategories = ["All", "Buy", "Rent", "Brand New", "Foreign Used", "Nigerian Used"] as const;
-export const serviceCategories = ["All", "Painting", "Cleaning", "Plumbing", "Electrical", "Electronics", "Carpentry", "AC Repair", "Fumigation"] as const;
+export const serviceCategories = ["All", "Painting", "Cleaning", "Plumbing", "Electrical", "Carpentry", "AC Repair", "Fumigation"] as const;
+export const electronicsCategories = ["All", "Phones", "Laptops", "TVs", "Audio", "Gaming", "Appliances", "Accessories"] as const;
 
 export const getCar = (id: string) => cars.find(c => c.id === id);
 export const getService = (id: string) => services.find(s => s.id === id);
