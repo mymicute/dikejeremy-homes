@@ -182,7 +182,10 @@ function AdminDashboard() {
             <p className="text-xs font-medium uppercase tracking-widest text-navy-700">Manager dashboard</p>
             <h1 className="font-display text-3xl font-semibold text-navy-950 dark:text-white">Dejedy control room</h1>
           </div>
-          <span className="hidden rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 md:inline">Admin</span>
+          <div className="flex items-center gap-2">
+            <span className="hidden rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 md:inline">Admin</span>
+            <button onClick={lock} className="rounded-full bg-navy-950 px-3 py-1 text-xs font-medium text-white">Lock</button>
+          </div>
         </div>
 
         {/* KPI cards */}
