@@ -67,8 +67,8 @@ function Home() {
       <main className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
         {/* Hero Search */}
         <section className="mb-10 md:mb-12">
-          <h1 className="mb-6 max-w-[20ch] text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:mb-8 md:text-6xl">
-            Find your place in the heart of Nigeria.
+          <h1 className="mb-6 max-w-[20ch] text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:mb-8 md:text-6xl whitespace-pre-line">
+            Find your perfect{"\u00A0"}{"\n"}place{"\u00A0"}
           </h1>
 
           <form
