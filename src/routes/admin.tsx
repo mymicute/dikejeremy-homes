@@ -144,6 +144,35 @@ function AdminDashboard() {
     );
   }
 
+  if (!unlocked) {
+    return (
+      <div className="min-h-screen bg-navy-50">
+        <Header />
+        <main className="mx-auto max-w-md px-4 py-16">
+          <div className="rounded-3xl bg-white p-8 text-center ring-1 ring-black/5">
+            <ShieldCheck className="mx-auto size-10 text-navy-950" />
+            <h1 className="mt-4 font-display text-2xl font-semibold text-navy-950">Manager dashboard</h1>
+            <p className="mt-2 text-sm text-navy-700">Enter the manager password to continue.</p>
+            <form onSubmit={submitPassword} className="mt-6 space-y-3">
+              <input
+                type="password"
+                autoFocus
+                value={pwInput}
+                onChange={(e) => { setPwInput(e.target.value); setPwError(false); }}
+                placeholder="Password"
+                className="w-full rounded-2xl bg-navy-50 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-navy-700"
+              />
+              {pwError && <p className="text-xs font-medium text-red-600">Incorrect password</p>}
+              <button type="submit" className="w-full rounded-full bg-navy-950 py-3 text-sm font-medium text-white">
+                Unlock
+              </button>
+            </form>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-navy-50 pb-32 dark:bg-navy-950">
       <Header />
