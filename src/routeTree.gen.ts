@@ -18,6 +18,7 @@ import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as ElectronicsRouteImport } from './routes/electronics'
 import { Route as CarsRouteImport } from './routes/cars'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -75,6 +76,11 @@ const ListPropertyRoute = ListPropertyRouteImport.update({
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElectronicsRoute = ElectronicsRouteImport.update({
+  id: '/electronics',
+  path: '/electronics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CarsRoute = CarsRouteImport.update({
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
   '/cars': typeof CarsRoute
+  '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
   '/cars': typeof CarsRoute
+  '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
   '/cars': typeof CarsRoute
+  '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/browse'
     | '/cars'
+    | '/electronics'
     | '/favorites'
     | '/list-property'
     | '/map'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/browse'
     | '/cars'
+    | '/electronics'
     | '/favorites'
     | '/list-property'
     | '/map'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/browse'
     | '/cars'
+    | '/electronics'
     | '/favorites'
     | '/list-property'
     | '/map'
@@ -294,6 +306,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BrowseRoute: typeof BrowseRoute
   CarsRoute: typeof CarsRoute
+  ElectronicsRoute: typeof ElectronicsRoute
   FavoritesRoute: typeof FavoritesRoute
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
@@ -371,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/electronics': {
+      id: '/electronics'
+      path: '/electronics'
+      fullPath: '/electronics'
+      preLoaderRoute: typeof ElectronicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cars': {
@@ -501,6 +521,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BrowseRoute: BrowseRoute,
   CarsRoute: CarsRoute,
+  ElectronicsRoute: ElectronicsRoute,
   FavoritesRoute: FavoritesRoute,
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,

@@ -28,6 +28,9 @@ type Profile = { id: string; full_name: string | null; created_at: string; avata
 type Property = { id: string; title: string; price: number; listing_type: string; city: string | null; created_at: string; owner_id: string; image_url: string | null };
 type Status = { id: string; user_id: string; caption: string | null; created_at: string; expires_at: string };
 
+const ADMIN_PASSWORD = "DEJEDY123";
+const ADMIN_UNLOCK_KEY = "dejedy_admin_unlocked";
+
 function AdminDashboard() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -36,6 +39,12 @@ function AdminDashboard() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [metric, setMetric] = useState<"listings" | "signups">("listings");
+  const [unlocked, setUnlocked] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem(ADMIN_UNLOCK_KEY) === "1";
+  });
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
 
   useEffect(() => {
     if (loading) return;
@@ -44,8 +53,25 @@ function AdminDashboard() {
       .then(({ data }) => setIsAdmin(!!data));
   }, [user, loading, navigate]);
 
+  function submitPassword(e: React.FormEvent) {
+    e.preventDefault();
+    if (pwInput === ADMIN_PASSWORD) {
+      sessionStorage.setItem(ADMIN_UNLOCK_KEY, "1");
+      setUnlocked(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  }
+
+  function lock() {
+    sessionStorage.removeItem(ADMIN_UNLOCK_KEY);
+    setUnlocked(false);
+    setPwInput("");
+  }
+
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!isAdmin || !unlocked) return;
     (async () => {
       const [{ data: p }, { data: pr }, { data: s }] = await Promise.all([
         supabase.from("profiles").select("id,full_name,created_at,avatar_url").order("created_at", { ascending: false }),
@@ -56,7 +82,7 @@ function AdminDashboard() {
       setProperties(pr ?? []);
       setStatuses(s ?? []);
     })();
-  }, [isAdmin]);
+  }, [isAdmin, unlocked]);
 
   const chartData = useMemo(() => {
     const source = metric === "listings" ? properties.map(p => p.created_at) : profiles.map(p => p.created_at);
@@ -118,6 +144,35 @@ function AdminDashboard() {
     );
   }
 
+  if (!unlocked) {
+    return (
+      <div className="min-h-screen bg-navy-50">
+        <Header />
+        <main className="mx-auto max-w-md px-4 py-16">
+          <div className="rounded-3xl bg-white p-8 text-center ring-1 ring-black/5">
+            <ShieldCheck className="mx-auto size-10 text-navy-950" />
+            <h1 className="mt-4 font-display text-2xl font-semibold text-navy-950">Manager dashboard</h1>
+            <p className="mt-2 text-sm text-navy-700">Enter the manager password to continue.</p>
+            <form onSubmit={submitPassword} className="mt-6 space-y-3">
+              <input
+                type="password"
+                autoFocus
+                value={pwInput}
+                onChange={(e) => { setPwInput(e.target.value); setPwError(false); }}
+                placeholder="Password"
+                className="w-full rounded-2xl bg-navy-50 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-navy-700"
+              />
+              {pwError && <p className="text-xs font-medium text-red-600">Incorrect password</p>}
+              <button type="submit" className="w-full rounded-full bg-navy-950 py-3 text-sm font-medium text-white">
+                Unlock
+              </button>
+            </form>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-navy-50 pb-32 dark:bg-navy-950">
       <Header />
@@ -127,7 +182,10 @@ function AdminDashboard() {
             <p className="text-xs font-medium uppercase tracking-widest text-navy-700">Manager dashboard</p>
             <h1 className="font-display text-3xl font-semibold text-navy-950 dark:text-white">Dejedy control room</h1>
           </div>
-          <span className="hidden rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 md:inline">Admin</span>
+          <div className="flex items-center gap-2">
+            <span className="hidden rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 md:inline">Admin</span>
+            <button onClick={lock} className="rounded-full bg-navy-950 px-3 py-1 text-xs font-medium text-white">Lock</button>
+          </div>
         </div>
 
         {/* KPI cards */}
