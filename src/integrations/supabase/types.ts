@@ -56,6 +56,7 @@ export type Database = {
           description: string | null
           id: string
           image_url: string | null
+          image_urls: string[]
           latitude: number | null
           listing_type: string
           location: string | null
@@ -67,6 +68,7 @@ export type Database = {
           state: string | null
           title: string
           updated_at: string
+          video_urls: string[]
         }
         Insert: {
           baths?: number | null
@@ -76,6 +78,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          image_urls?: string[]
           latitude?: number | null
           listing_type?: string
           location?: string | null
@@ -87,6 +90,7 @@ export type Database = {
           state?: string | null
           title: string
           updated_at?: string
+          video_urls?: string[]
         }
         Update: {
           baths?: number | null
@@ -96,6 +100,7 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          image_urls?: string[]
           latitude?: number | null
           listing_type?: string
           location?: string | null
@@ -107,6 +112,7 @@ export type Database = {
           state?: string | null
           title?: string
           updated_at?: string
+          video_urls?: string[]
         }
         Relationships: []
       }
