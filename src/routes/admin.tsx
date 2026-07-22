@@ -71,7 +71,7 @@ function AdminDashboard() {
   }
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!isAdmin || !unlocked) return;
     (async () => {
       const [{ data: p }, { data: pr }, { data: s }] = await Promise.all([
         supabase.from("profiles").select("id,full_name,created_at,avatar_url").order("created_at", { ascending: false }),
@@ -82,7 +82,7 @@ function AdminDashboard() {
       setProperties(pr ?? []);
       setStatuses(s ?? []);
     })();
-  }, [isAdmin]);
+  }, [isAdmin, unlocked]);
 
   const chartData = useMemo(() => {
     const source = metric === "listings" ? properties.map(p => p.created_at) : profiles.map(p => p.created_at);
