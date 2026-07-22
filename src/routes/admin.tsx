@@ -28,6 +28,9 @@ type Profile = { id: string; full_name: string | null; created_at: string; avata
 type Property = { id: string; title: string; price: number; listing_type: string; city: string | null; created_at: string; owner_id: string; image_url: string | null };
 type Status = { id: string; user_id: string; caption: string | null; created_at: string; expires_at: string };
 
+const ADMIN_PASSWORD = "DEJEDY123";
+const ADMIN_UNLOCK_KEY = "dejedy_admin_unlocked";
+
 function AdminDashboard() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -36,6 +39,12 @@ function AdminDashboard() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [metric, setMetric] = useState<"listings" | "signups">("listings");
+  const [unlocked, setUnlocked] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem(ADMIN_UNLOCK_KEY) === "1";
+  });
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
 
   useEffect(() => {
     if (loading) return;
@@ -43,6 +52,23 @@ function AdminDashboard() {
     supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle()
       .then(({ data }) => setIsAdmin(!!data));
   }, [user, loading, navigate]);
+
+  function submitPassword(e: React.FormEvent) {
+    e.preventDefault();
+    if (pwInput === ADMIN_PASSWORD) {
+      sessionStorage.setItem(ADMIN_UNLOCK_KEY, "1");
+      setUnlocked(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  }
+
+  function lock() {
+    sessionStorage.removeItem(ADMIN_UNLOCK_KEY);
+    setUnlocked(false);
+    setPwInput("");
+  }
 
   useEffect(() => {
     if (!isAdmin) return;

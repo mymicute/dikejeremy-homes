@@ -74,11 +74,23 @@ function PropertyDetail() {
         </Link>
 
         <div className="overflow-hidden rounded-3xl bg-white ring-1 ring-black/5">
-          {property.image_url ? (
-            <img src={property.image_url} alt={property.title} className="h-64 w-full object-cover md:h-[520px]" />
-          ) : (
-            <div className="grid h-64 place-items-center bg-navy-50 md:h-[520px]"><MapPin className="size-10 text-navy-700" /></div>
-          )}
+          {(() => {
+            const imgs = (property.image_urls && property.image_urls.length > 0) ? property.image_urls : (property.image_url ? [property.image_url] : []);
+            const vids = property.video_urls ?? [];
+            if (imgs.length === 0 && vids.length === 0) {
+              return <div className="grid h-64 place-items-center bg-navy-50 md:h-[520px]"><MapPin className="size-10 text-navy-700" /></div>;
+            }
+            return (
+              <div className="flex snap-x snap-mandatory gap-1 overflow-x-auto">
+                {imgs.map((src, i) => (
+                  <img key={`i${i}`} src={src} alt={`${property.title} ${i + 1}`} className="h-64 w-full flex-none snap-start object-cover md:h-[520px]" />
+                ))}
+                {vids.map((src, i) => (
+                  <video key={`v${i}`} src={src} controls className="h-64 w-full flex-none snap-start bg-black object-cover md:h-[520px]" />
+                ))}
+              </div>
+            );
+          })()}
         </div>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-3">

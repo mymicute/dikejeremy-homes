@@ -239,12 +239,12 @@ function Home() {
         )}
 
         {/* Discover cards */}
-        <section className="mt-8 grid gap-4 md:grid-cols-3">
+        <section className="mt-8 grid gap-4 md:grid-cols-4">
           <Link to="/map" className="group flex items-center justify-between rounded-3xl bg-card p-6 ring-1 ring-border">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Explore</p>
               <h3 className="mt-1 font-display text-xl font-semibold text-foreground">Map view</h3>
-              <p className="mt-1 text-sm text-muted-foreground">Browse listings across Nigeria on the map.</p>
+              <p className="mt-1 text-sm text-muted-foreground">Browse listings across Nigeria.</p>
             </div>
             <MapPin className="size-5 text-foreground transition group-hover:translate-x-1" />
           </Link>
@@ -252,15 +252,23 @@ function Home() {
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-wider opacity-70">Marketplace</p>
               <h3 className="mt-1 font-display text-xl font-semibold">Cars — buy & rent</h3>
-              <p className="mt-1 text-sm opacity-80">Add cars for sale or daily rental.</p>
+              <p className="mt-1 text-sm opacity-80">Cars for sale or daily rental.</p>
             </div>
             <ArrowRight className="size-5 transition group-hover:translate-x-1" />
+          </Link>
+          <Link to="/electronics" className="group flex items-center justify-between rounded-3xl bg-card p-6 ring-1 ring-border">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Marketplace</p>
+              <h3 className="mt-1 font-display text-xl font-semibold text-foreground">Electronics</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Phones, laptops, TVs, appliances.</p>
+            </div>
+            <ArrowRight className="size-5 text-foreground transition group-hover:translate-x-1" />
           </Link>
           <Link to="/services" className="group flex items-center justify-between rounded-3xl bg-card p-6 ring-1 ring-border">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Home services</p>
               <h3 className="mt-1 font-display text-xl font-semibold text-foreground">Painting, plumbing…</h3>
-              <p className="mt-1 text-sm text-muted-foreground">List professional home services.</p>
+              <p className="mt-1 text-sm text-muted-foreground">Professional home services.</p>
             </div>
             <ArrowRight className="size-5 text-foreground transition group-hover:translate-x-1" />
           </Link>

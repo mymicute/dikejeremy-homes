@@ -24,8 +24,8 @@ function ListProperty() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
+  const [photos, setPhotos] = useState<Array<{ file: File; preview: string }>>([]);
+  const [videos, setVideos] = useState<Array<{ file: File; preview: string }>>([]);
   const [form, setForm] = useState({
     title: "",
     listing_type: "Buy",
@@ -39,16 +39,25 @@ function ListProperty() {
     longitude: null as number | null,
     description: "",
   });
-  const fileRef = useRef<HTMLInputElement>(null);
+  const photoRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLInputElement>(null);
 
   function set<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
     setForm((f) => ({ ...f, [k]: v }));
   }
 
-  function pickFile(f: File | null) {
-    setFile(f);
-    setPreview(f ? URL.createObjectURL(f) : null);
+  function addPhotos(files: FileList | null) {
+    if (!files) return;
+    const next = Array.from(files).map((file) => ({ file, preview: URL.createObjectURL(file) }));
+    setPhotos((p) => [...p, ...next]);
   }
+  function addVideos(files: FileList | null) {
+    if (!files) return;
+    const next = Array.from(files).map((file) => ({ file, preview: URL.createObjectURL(file) }));
+    setVideos((v) => [...v, ...next]);
+  }
+  function removePhoto(i: number) { setPhotos((p) => p.filter((_, idx) => idx !== i)); }
+  function removeVideo(i: number) { setVideos((v) => v.filter((_, idx) => idx !== i)); }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -62,10 +71,15 @@ function ListProperty() {
     }
     setSubmitting(true);
     try {
-      let image_url: string | null = null;
-      if (file) {
-        const up = await uploadMedia(user.id, "property", file);
-        image_url = up.url;
+      const image_urls: string[] = [];
+      for (const p of photos) {
+        const up = await uploadMedia(user.id, "property", p.file);
+        image_urls.push(up.url);
+      }
+      const video_urls: string[] = [];
+      for (const v of videos) {
+        const up = await uploadMedia(user.id, "property", v.file);
+        video_urls.push(up.url);
       }
       const [city, state] = form.location.split(",").map((s) => s.trim());
       const { error } = await supabase.from("properties").insert({
@@ -83,7 +97,9 @@ function ListProperty() {
         state: state || null,
         latitude: form.latitude,
         longitude: form.longitude,
-        image_url,
+        image_url: image_urls[0] ?? null,
+        image_urls,
+        video_urls,
       });
       if (error) throw error;
       toast.success("Listing posted");
@@ -163,19 +179,39 @@ function ListProperty() {
           <Row label="Description">
             <textarea value={form.description} onChange={(e) => set("description", e.target.value)} rows={4} className="input" placeholder="Describe the property, amenities and neighbourhood…" />
           </Row>
-          <Row label="Photo">
-            <button type="button" onClick={() => fileRef.current?.click()} className="grid w-full place-items-center gap-2 rounded-2xl border border-dashed border-navy-700/30 bg-navy-50 p-8 text-center">
-              {preview ? (
-                <img src={preview} alt="Preview" className="mx-auto max-h-64 rounded-xl object-cover" />
-              ) : (
-                <>
-                  <Camera className="size-6 text-navy-700" />
-                  <p className="text-sm font-medium text-navy-950">Tap to upload a photo</p>
-                  <p className="text-xs text-navy-700">JPG or PNG</p>
-                </>
-              )}
-            </button>
-            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => pickFile(e.target.files?.[0] ?? null)} />
+          <Row label="Photos (add one or many)">
+            <div className="grid grid-cols-3 gap-2 md:grid-cols-4">
+              {photos.map((p, i) => (
+                <div key={i} className="relative overflow-hidden rounded-xl bg-navy-50">
+                  <img src={p.preview} alt="" className="aspect-square w-full object-cover" />
+                  <button type="button" onClick={() => removePhoto(i)} className="absolute right-1 top-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-white">
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={() => photoRef.current?.click()} className="grid aspect-square place-items-center rounded-xl border border-dashed border-navy-700/30 bg-navy-50 text-center">
+                <Camera className="size-5 text-navy-700" />
+                <span className="mt-1 text-[10px] font-medium text-navy-700">Add photo</span>
+              </button>
+            </div>
+            <input ref={photoRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => addPhotos(e.target.files)} />
+          </Row>
+          <Row label="Videos (optional)">
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+              {videos.map((v, i) => (
+                <div key={i} className="relative overflow-hidden rounded-xl bg-navy-950">
+                  <video src={v.preview} className="aspect-video w-full object-cover" muted />
+                  <button type="button" onClick={() => removeVideo(i)} className="absolute right-1 top-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-white">
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button type="button" onClick={() => videoRef.current?.click()} className="grid aspect-video place-items-center rounded-xl border border-dashed border-navy-700/30 bg-navy-50 text-center">
+                <Upload className="size-5 text-navy-700" />
+                <span className="mt-1 text-[10px] font-medium text-navy-700">Add video</span>
+              </button>
+            </div>
+            <input ref={videoRef} type="file" accept="video/*" multiple className="hidden" onChange={(e) => addVideos(e.target.files)} />
           </Row>
           <div className="flex items-center gap-2 rounded-2xl bg-navy-950 p-4 text-white">
             <Sparkles className="size-4" />
