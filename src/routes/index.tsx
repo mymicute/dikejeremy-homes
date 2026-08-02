@@ -140,7 +140,26 @@ function Home() {
           />
         </form>
 
-        {/* Stories / statuses */}
+        {/* Quick links */}
+        <div className="-mx-3 mb-3 flex gap-2 overflow-x-auto px-3 pb-1">
+          {[
+            { to: "/reels", label: "Reels" },
+            { to: "/favorites", label: "Saved" },
+            { to: "/messages", label: "Chats" },
+            { to: "/profile", label: "Profile" },
+            { to: "/settings", label: "Settings" },
+          ].map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              className="shrink-0 rounded-full bg-card px-3.5 py-1.5 text-xs font-medium text-foreground ring-1 ring-border hover:bg-primary hover:text-primary-foreground"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+
+
         <section className="mb-3 rounded-2xl bg-card p-3 ring-1 ring-border">
           <div className="mb-2 flex items-center justify-between">
             <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

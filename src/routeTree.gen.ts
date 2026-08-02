@@ -10,13 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ShortStayRouteImport } from './routes/short-stay'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ResidentialRouteImport } from './routes/residential'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReelsRouteImport } from './routes/reels'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
+import { Route as LandRouteImport } from './routes/land'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as ElectronicsRouteImport } from './routes/electronics'
 import { Route as CarsRouteImport } from './routes/cars'
@@ -38,6 +42,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShortStayRoute = ShortStayRouteImport.update({
+  id: '/short-stay',
+  path: '/short-stay',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -48,9 +57,19 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResidentialRoute = ResidentialRouteImport.update({
+  id: '/residential',
+  path: '/residential',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReelsRoute = ReelsRouteImport.update({
+  id: '/reels',
+  path: '/reels',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -71,6 +90,11 @@ const MapRoute = MapRouteImport.update({
 const ListPropertyRoute = ListPropertyRouteImport.update({
   id: '/list-property',
   path: '/list-property',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandRoute = LandRouteImport.update({
+  id: '/land',
+  path: '/land',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -158,13 +182,17 @@ export interface FileRoutesByFullPath {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -182,12 +210,16 @@ export interface FileRoutesByTo {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -207,13 +239,17 @@ export interface FileRoutesById {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -234,13 +270,17 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/messages'
     | '/profile'
+    | '/reels'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -258,12 +298,16 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/profile'
+    | '/reels'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -282,13 +326,17 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/messages'
     | '/profile'
+    | '/reels'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -308,13 +356,17 @@ export interface RootRouteChildren {
   CarsRoute: typeof CarsRoute
   ElectronicsRoute: typeof ElectronicsRoute
   FavoritesRoute: typeof FavoritesRoute
+  LandRoute: typeof LandRoute
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ReelsRoute: typeof ReelsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ResidentialRoute: typeof ResidentialRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
+  ShortStayRoute: typeof ShortStayRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CheckoutIdRoute: typeof CheckoutIdRoute
   PropertyIdRoute: typeof PropertyIdRoute
@@ -328,6 +380,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/short-stay': {
+      id: '/short-stay'
+      path: '/short-stay'
+      fullPath: '/short-stay'
+      preLoaderRoute: typeof ShortStayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -344,11 +403,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/residential': {
+      id: '/residential'
+      path: '/residential'
+      fullPath: '/residential'
+      preLoaderRoute: typeof ResidentialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reels': {
+      id: '/reels'
+      path: '/reels'
+      fullPath: '/reels'
+      preLoaderRoute: typeof ReelsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -377,6 +450,13 @@ declare module '@tanstack/react-router' {
       path: '/list-property'
       fullPath: '/list-property'
       preLoaderRoute: typeof ListPropertyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/land': {
+      id: '/land'
+      path: '/land'
+      fullPath: '/land'
+      preLoaderRoute: typeof LandRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -523,13 +603,17 @@ const rootRouteChildren: RootRouteChildren = {
   CarsRoute: CarsRoute,
   ElectronicsRoute: ElectronicsRoute,
   FavoritesRoute: FavoritesRoute,
+  LandRoute: LandRoute,
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ReelsRoute: ReelsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ResidentialRoute: ResidentialRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
+  ShortStayRoute: ShortStayRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CheckoutIdRoute: CheckoutIdRoute,
   PropertyIdRoute: PropertyIdRoute,
