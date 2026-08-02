@@ -22,8 +22,26 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/")({
   ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Dejedy — Nigeria's property & marketplace feed" },
+      {
+        name: "description",
+        content:
+          "Scroll the Dejedy feed for verified Nigerian property listings, cars, electronics and home services — plus live status updates.",
+      },
+      { property: "og:title", content: "Dejedy — Nigeria's property & marketplace feed" },
+      {
+        property: "og:description",
+        content: "Property, cars, electronics and services listings from verified Nigerian vendors.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Home,
 });
+
 
 type Profile = { full_name: string | null; avatar_url: string | null };
 type Property = Tables<"properties"> & { profiles: Profile | null };
