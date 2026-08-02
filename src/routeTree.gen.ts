@@ -17,6 +17,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ListPropertyRouteImport } from './routes/list-property'
+import { Route as LandRouteImport } from './routes/land'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as ElectronicsRouteImport } from './routes/electronics'
 import { Route as CarsRouteImport } from './routes/cars'
@@ -71,6 +72,11 @@ const MapRoute = MapRouteImport.update({
 const ListPropertyRoute = ListPropertyRouteImport.update({
   id: '/list-property',
   path: '/list-property',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LandRoute = LandRouteImport.update({
+  id: '/land',
+  path: '/land',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/cars': typeof CarsRoute
   '/electronics': typeof ElectronicsRoute
   '/favorites': typeof FavoritesRoute
+  '/land': typeof LandRoute
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/messages'
@@ -258,6 +268,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/profile'
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/electronics'
     | '/favorites'
+    | '/land'
     | '/list-property'
     | '/map'
     | '/messages'
@@ -308,6 +320,7 @@ export interface RootRouteChildren {
   CarsRoute: typeof CarsRoute
   ElectronicsRoute: typeof ElectronicsRoute
   FavoritesRoute: typeof FavoritesRoute
+  LandRoute: typeof LandRoute
   ListPropertyRoute: typeof ListPropertyRoute
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/list-property'
       fullPath: '/list-property'
       preLoaderRoute: typeof ListPropertyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/land': {
+      id: '/land'
+      path: '/land'
+      fullPath: '/land'
+      preLoaderRoute: typeof LandRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -523,6 +543,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarsRoute: CarsRoute,
   ElectronicsRoute: ElectronicsRoute,
   FavoritesRoute: FavoritesRoute,
+  LandRoute: LandRoute,
   ListPropertyRoute: ListPropertyRoute,
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
@@ -538,13 +559,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
