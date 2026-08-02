@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ShortStayRouteImport } from './routes/short-stay'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ResidentialRouteImport } from './routes/residential'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MessagesRouteImport } from './routes/messages'
@@ -39,6 +41,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShortStayRoute = ShortStayRouteImport.update({
+  id: '/short-stay',
+  path: '/short-stay',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -47,6 +54,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResidentialRoute = ResidentialRouteImport.update({
+  id: '/residential',
+  path: '/residential',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -170,8 +182,10 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -194,8 +208,10 @@ export interface FileRoutesByTo {
   '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -221,8 +237,10 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
   '/settings': typeof SettingsRoute
+  '/short-stay': typeof ShortStayRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/agents/$id': typeof AgentsIdRoute
   '/checkout/$id': typeof CheckoutIdRoute
@@ -249,8 +267,10 @@ export interface FileRouteTypes {
     | '/messages'
     | '/profile'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -273,8 +293,10 @@ export interface FileRouteTypes {
     | '/map'
     | '/profile'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -299,8 +321,10 @@ export interface FileRouteTypes {
     | '/messages'
     | '/profile'
     | '/reset-password'
+    | '/residential'
     | '/services'
     | '/settings'
+    | '/short-stay'
     | '/sitemap.xml'
     | '/agents/$id'
     | '/checkout/$id'
@@ -326,8 +350,10 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ResidentialRoute: typeof ResidentialRoute
   ServicesRoute: typeof ServicesRoute
   SettingsRoute: typeof SettingsRoute
+  ShortStayRoute: typeof ShortStayRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CheckoutIdRoute: typeof CheckoutIdRoute
   PropertyIdRoute: typeof PropertyIdRoute
@@ -343,6 +369,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/short-stay': {
+      id: '/short-stay'
+      path: '/short-stay'
+      fullPath: '/short-stay'
+      preLoaderRoute: typeof ShortStayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -355,6 +388,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/residential': {
+      id: '/residential'
+      path: '/residential'
+      fullPath: '/residential'
+      preLoaderRoute: typeof ResidentialRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -549,8 +589,10 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ResidentialRoute: ResidentialRoute,
   ServicesRoute: ServicesRoute,
   SettingsRoute: SettingsRoute,
+  ShortStayRoute: ShortStayRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CheckoutIdRoute: CheckoutIdRoute,
   PropertyIdRoute: PropertyIdRoute,
