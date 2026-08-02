@@ -15,6 +15,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ResidentialRouteImport } from './routes/residential'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReelsRouteImport } from './routes/reels'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MapRouteImport } from './routes/map'
@@ -64,6 +65,11 @@ const ResidentialRoute = ResidentialRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReelsRoute = ReelsRouteImport.update({
+  id: '/reels',
+  path: '/reels',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -181,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/list-property': typeof ListPropertyRoute
   '/map': typeof MapRoute
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
@@ -236,6 +244,7 @@ export interface FileRoutesById {
   '/map': typeof MapRoute
   '/messages': typeof MessagesRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reels': typeof ReelsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/services': typeof ServicesRoute
@@ -266,6 +275,7 @@ export interface FileRouteTypes {
     | '/map'
     | '/messages'
     | '/profile'
+    | '/reels'
     | '/reset-password'
     | '/residential'
     | '/services'
@@ -292,6 +302,7 @@ export interface FileRouteTypes {
     | '/list-property'
     | '/map'
     | '/profile'
+    | '/reels'
     | '/reset-password'
     | '/residential'
     | '/services'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/map'
     | '/messages'
     | '/profile'
+    | '/reels'
     | '/reset-password'
     | '/residential'
     | '/services'
@@ -349,6 +361,7 @@ export interface RootRouteChildren {
   MapRoute: typeof MapRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ReelsRoute: typeof ReelsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResidentialRoute: typeof ResidentialRoute
   ServicesRoute: typeof ServicesRoute
@@ -402,6 +415,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reels': {
+      id: '/reels'
+      path: '/reels'
+      fullPath: '/reels'
+      preLoaderRoute: typeof ReelsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -588,6 +608,7 @@ const rootRouteChildren: RootRouteChildren = {
   MapRoute: MapRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ReelsRoute: ReelsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResidentialRoute: ResidentialRoute,
   ServicesRoute: ServicesRoute,
