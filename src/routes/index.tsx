@@ -1,9 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, MapPin, TrendingUp, ArrowRight, Plus, Building2, Users, Sparkles } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Plus,
+  Building2,
+  Sparkles,
+  ThumbsUp,
+  MessageSquare,
+  Share2,
+  Bookmark,
+  Image as ImageIcon,
+  Video,
+  BadgeCheck,
+} from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { BottomNav } from "@/components/site/BottomNav";
-import { categories, trendingLocations, formatNaira } from "@/lib/mock-data";
+import { formatNaira } from "@/lib/mock-data";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -12,11 +25,11 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-type Property = Tables<"properties">;
+type Profile = Pick<Tables<"profiles">, "full_name" | "avatar_url">;
+type Property = Tables<"properties"> & { profiles: Profile | null };
 type StatusPost = Tables<"status_posts">;
-type StatusWithProfile = StatusPost & {
-  profiles: Pick<Tables<"profiles">, "full_name" | "avatar_url"> | null;
-};
+type StatusWithProfile = StatusPost & { profiles: Profile | null };
+
 
 function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
