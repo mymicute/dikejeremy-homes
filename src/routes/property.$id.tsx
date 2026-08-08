@@ -1,4 +1,5 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { startConversation } from "@/lib/chat";
 import { useEffect, useState } from "react";
 import { BadgeCheck, Bed, Bath, Ruler, MapPin, Heart, Share2, ArrowLeft, Flag, CreditCard } from "lucide-react";
 import { Header } from "@/components/site/Header";
