@@ -37,6 +37,23 @@ function PropertyDetail() {
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [contacting, setContacting] = useState(false);
+  const navigate = useNavigate();
+
+  async function contactVendor() {
+    if (!property) return;
+    setContacting(true);
+    try {
+      const conversationId = await startConversation(property.owner_id, property.id);
+      await navigate({ to: "/messages/$id", params: { id: conversationId } });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Could not open the chat.";
+      toast.error(msg);
+      if (msg.includes("sign in")) await navigate({ to: "/auth" });
+    } finally {
+      setContacting(false);
+    }
+  }
 
   useEffect(() => {
     supabase.from("properties").select("*").eq("id", id).maybeSingle().then(({ data }) => {
