@@ -1,4 +1,5 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { startConversation } from "@/lib/chat";
 import { useEffect, useState } from "react";
 import { BadgeCheck, Bed, Bath, Ruler, MapPin, Heart, Share2, ArrowLeft, Flag, CreditCard } from "lucide-react";
 import { Header } from "@/components/site/Header";
@@ -37,6 +38,23 @@ function PropertyDetail() {
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [contacting, setContacting] = useState(false);
+  const navigate = useNavigate();
+
+  async function contactVendor() {
+    if (!property) return;
+    setContacting(true);
+    try {
+      const conversationId = await startConversation(property.owner_id, property.id);
+      await navigate({ to: "/messages/$id", params: { id: conversationId } });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Could not open the chat.";
+      toast.error(msg);
+      if (msg.includes("sign in")) await navigate({ to: "/auth" });
+    } finally {
+      setContacting(false);
+    }
+  }
 
   useEffect(() => {
     supabase.from("properties").select("*").eq("id", id).maybeSingle().then(({ data }) => {
@@ -164,12 +182,13 @@ function PropertyDetail() {
               >
                 <CreditCard className="size-4" /> Reserve / Pay
               </Link>
-              <Link
-                to="/messages"
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-navy-50 px-4 py-3 text-sm font-medium text-navy-950"
+              <button
+                onClick={contactVendor}
+                disabled={contacting}
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-navy-50 px-4 py-3 text-sm font-medium text-navy-950 disabled:opacity-60"
               >
-                Message about this listing
-              </Link>
+                {contacting ? "Opening chat…" : "Message about this listing"}
+              </button>
             </div>
           </aside>
         </div>
