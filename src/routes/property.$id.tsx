@@ -164,12 +164,13 @@ function PropertyDetail() {
               >
                 <CreditCard className="size-4" /> Reserve / Pay
               </Link>
-              <Link
-                to="/messages"
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-navy-50 px-4 py-3 text-sm font-medium text-navy-950"
+              <button
+                onClick={contactVendor}
+                disabled={contacting}
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-navy-50 px-4 py-3 text-sm font-medium text-navy-950 disabled:opacity-60"
               >
-                Message about this listing
-              </Link>
+                {contacting ? "Opening chat…" : "Message about this listing"}
+              </button>
             </div>
           </aside>
         </div>
